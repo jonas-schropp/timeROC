@@ -123,14 +123,14 @@ timeROC<-function(T,delta,marker,other_markers=NULL,cause,weighting="marginal",t
   marker<- marker[order_T]
   # use ipcw function from pec package
   if(weighting=="marginal"){
-    weights <- pec::ipcw(Surv(failure_time,status)~1,data=data.frame(failure_time=T,status=as.numeric(delta!=0)),method="marginal",times=times,subjectTimes=T,subjectTimesLag=1)
+    weights <- pec::ipcw(survival::Surv(failure_time,status)~1,data=data.frame(failure_time=T,status=as.numeric(delta!=0)),method="marginal",times=times,subjectTimes=T,subjectTimesLag=1)
   }
   if(weighting=="cox"){
     if (missing(other_markers)){marker_censoring<-marker } 
     other_markers<-other_markers[order_T,]
     marker_censoring<-cbind(marker,other_markers)
     colnames(marker_censoring)<-paste("X", 1:ncol(marker_censoring), sep="")
-    fmla <- as.formula(paste("Surv(T,status)~", paste(paste("X", 1:ncol(marker_censoring), sep=""), collapse= "+")))
+    fmla <- as.formula(paste("survival::Surv(T,status)~", paste(paste("X", 1:ncol(marker_censoring), sep=""), collapse= "+")))
     data_weight<-as.data.frame(cbind(data.frame(T=T,status=as.numeric(delta!=0)),marker_censoring))
     weights <- pec::ipcw(fmla,data=data_weight,method="cox",times=as.matrix(times),subjectTimes=data_weight[,"T"],subjectTimesLag=1)
   }
@@ -139,7 +139,7 @@ timeROC<-function(T,delta,marker,other_markers=NULL,cause,weighting="marginal",t
     other_markers<-other_markers[order_T,]
     marker_censoring<-cbind(marker,other_markers)
     colnames(marker_censoring)<-paste("X", 1:ncol(marker_censoring), sep="")
-    fmla <- as.formula(paste("Surv(T,status)~", paste(paste("X", 1:ncol(marker_censoring), sep=""), collapse= "+")))
+    fmla <- as.formula(paste("survival::Surv(T,status)~", paste(paste("X", 1:ncol(marker_censoring), sep=""), collapse= "+")))
     data_weight<-as.data.frame(cbind(data.frame(T=T,status=as.numeric(delta!=0)),marker_censoring))
     weights <- pec::ipcw(fmla,data=data_weight,method="aalen",times=as.matrix(times),subjectTimes=data_weight[,"T"],subjectTimesLag=1)
   }

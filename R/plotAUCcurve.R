@@ -1,7 +1,7 @@
 plotAUCcurve <- function(object,FP=2,add=FALSE,conf.int=FALSE,conf.band=FALSE,col="black"){
   ## browser()
   # {{{ class "ipcwsurvivalROC"
-  if(class(object)=="ipcwsurvivalROC"){
+  if(inherits(object, "ipcwsurvivalROC")){
     AUC <-  object$AUC[!is.na(object$AUC)]
     times <- object$times[!is.na(object$AUC)]
     if (add==FALSE){
@@ -30,7 +30,7 @@ plotAUCcurve <- function(object,FP=2,add=FALSE,conf.int=FALSE,conf.band=FALSE,co
   }
   # }}}
   # {{{ class "ipcwcompetingrisksROC"
-  if(class(object)=="ipcwcompetingrisksROC"){
+  if(inherits(object, "ipcwcompetingrisksROC")){
     if (FP==2){
       AUC <-  object$AUC_2[!is.na(object$AUC_2)]
       times <- object$times[!is.na(object$AUC_2)]
@@ -78,7 +78,7 @@ plotAUCcurve <- function(object,FP=2,add=FALSE,conf.int=FALSE,conf.band=FALSE,co
   }
   # }}}
   # {{{ error if not class ipcwcompetingrisksROC nor ipcwsurvivalROC
-  if(class(object)!="ipcwcompetingrisksROC" & class(object)!="ipcwsurvivalROC"){
+  if(!inherits(object, "ipcwcompetingrisksROC") & !inherits(object, "ipcwsurvivalROC")){
     stop("Function written for object of class ipcwsurvivalROC or ipcwcompetingrisksROC\n")
   }
   # }}}

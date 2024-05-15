@@ -39,7 +39,7 @@ compare<-function(x,y,adjusted=FALSE,abseps = 0.000001){
     )
     )
   }
-  if(class(x)=="ipcwcompetingrisksROC"){
+  if(inherits(x, "ipcwcompetingrisksROC")){
     #compute the difference of AUC estimates
     DELTA_1<-x$AUC_1-y$AUC_1
     DELTA_2<-x$AUC_2-y$AUC_2  
@@ -74,7 +74,7 @@ compare<-function(x,y,adjusted=FALSE,abseps = 0.000001){
       return(list(p_values_AUC_1=p_all_1, p_values_AUC_2=p_all_2,Cor=list(Cor_1=all_1$MarCorrDiff,Cor_2=all_2$MarCorrDiff)))
     }
   }
-  if(class(x)=="ipcwsurvivalROC"){
+  if(inherits(x, "ipcwsurvivalROC")){
     #compute the difference of AUC estimates
     DELTA_1<-x$AUC-y$AUC 
     #compute sd of the difference of AUC estimates

@@ -13,7 +13,7 @@ plotAUCcurveDiff <- function(object1,object2,FP=2,add=FALSE,conf.int=FALSE,conf.
   } 
   # }}}
   # {{{ class "ipcwsurvivalROC"
-  if(class(object1)=="ipcwsurvivalROC"){
+  if(inherits(object1, "ipcwsurvivalROC")){
     AUC <-  object1$AUC[!(is.na(object1$AUC)|is.na(object2$AUC))]- object2$AUC[!(is.na(object1$AUC)|is.na(object2$AUC))]
     times <- object1$times[!(is.na(object1$AUC)|is.na(object2$AUC))]
     if (add==FALSE){
@@ -56,7 +56,7 @@ plotAUCcurveDiff <- function(object1,object2,FP=2,add=FALSE,conf.int=FALSE,conf.
   }
   # }}}
   # {{{ class "ipcwcompetingrisksROC"
-  if(class(object1)=="ipcwcompetingrisksROC"){
+  if(inherits(object1, "ipcwcompetingrisksROC")){
     if (FP==2){
       AUC <-  object1$AUC_2[!(is.na(object1$AUC_2)|is.na(object2$AUC_2))]- object2$AUC_2[!(is.na(object1$AUC_2)|is.na(object2$AUC_2))]
       times <- object1$times[!(is.na(object1$AUC_2)|is.na(object2$AUC_2))]
@@ -113,7 +113,10 @@ plotAUCcurveDiff <- function(object1,object2,FP=2,add=FALSE,conf.int=FALSE,conf.
   }
   # }}}
   # {{{ error if not class ipcwcompetingrisksROC nor ipcwsurvivalROC
-  if((class(object1)!="ipcwcompetingrisksROC" & class(object1)!="ipcwsurvivalROC") | (class(object2)!="ipcwcompetingrisksROC" & class(object2)!="ipcwsurvivalROC")){
+  if(
+    !(inherits(object1, "ipcwcompetingrisksROC") | inherits(object1, "ipcwsurvivalROC")) | 
+    !(inherits(object2, "ipcwcompetingrisksROC") | inherits(object2, "ipcwsurvivalROC"))
+    ){
     stop("Function written for object of class ipcwsurvivalROC or ipcwcompetingrisksROC\n")
   }
   # }}}

@@ -19,3 +19,4 @@ S3method(plot,ipcwsurvivalROC)
 
 importFrom("graphics", "abline", "lines", "matlines", "plot")
 importFrom("stats", "as.formula", "confint", "pnorm", "qnorm","quantile", "rnorm", "sd", "var")
+importFrom("survival", "Surv")
